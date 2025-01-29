@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float moveSpeed;
     public float gravityForce;
+    public Animator animator;
 
     private Rigidbody2D rigidbody2D;
     private float minMoveSpeed = 0.1f;
@@ -18,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.gravityScale = 1.0f;
+
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
 
+        Animate(horizontalInput);
         AddGravityForce();
         Move(horizontalInput);
         CheckMoveDirection(horizontalInput);
@@ -100,5 +104,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    private void Animate(float horizontalInput)
+    {
+        animator.SetBool("IsGrounded", isGrounded);
+        animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
     }
 }
