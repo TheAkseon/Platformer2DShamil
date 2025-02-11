@@ -6,6 +6,7 @@ public class Coin : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
+            player.collector.UpdateMoney();
             Destroy(gameObject);
         }
     }
